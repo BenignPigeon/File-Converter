@@ -1,3 +1,4 @@
+first_execution=true 
 method=explorer 
 has_ffmpeg=false 
 has_pdf_to_docx_dependencies=false 

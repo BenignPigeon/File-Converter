@@ -1,14 +1,39 @@
 @echo off
 setlocal enabledelayedexpansion
 
+:: Detect if running from temp location with 'temp' argument
+if "%~1"=="temp" goto proceed_uninstall
+
+:: --- Copy to TEMP and Overwrite ---
+set "tempUninstaller=%TEMP%\uninstaller_temp.bat"
+copy /Y "%~f0" "%tempUninstaller%" >nul
+
+:: Create VBScript to delete temp batch after delay (overwrite-safe)
+set "vbsFile=%TEMP%\del_temp.vbs"
+(
+    echo WScript.Sleep 1000
+    echo Set fso = CreateObject("Scripting.FileSystemObject")
+    echo fso.DeleteFile "%tempUninstaller%", True
+) > "%vbsFile%"
+
+:: Open the terminal window and run temp batch with 'temp' flag
+start "" cmd /C "%tempUninstaller% temp"
+
+:: Run VBScript after batch exits (deletes temp batch file)
+start "" cscript //B "%vbsFile%" >nul 2>&1
+
+exit /b
+
+:: --- Uninstaller Starts Here ---
+:proceed_uninstall
+echo Uninstalling File Converter...
+
 :: Define paths
 set "batFilesLocal=%LOCALAPPDATA%\Bat-Files\File-Converter"
 set "desktopFolder=%USERPROFILE%\Desktop"
 set "startMenuFolder=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Bat-Files"
 set "shortcutName=File Converter"
 set "uninstallRegistryKey=HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\File Converter"
-
-echo Uninstalling File Converter...
 
 :: Step 1: Delete the File-Converter folder
 if exist "%batFilesLocal%" (
@@ -38,15 +63,8 @@ if exist "%startMenuFolder%\%shortcutName%.lnk" (
 )
 
 :: Step 4: Remove the uninstall registry key
-if exist "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\File-Converter" (
-    echo Deleting uninstall registry key...
-    reg delete "%uninstallRegistryKey%" /f /va
-    echo Uninstall registry key deleted.
-) else (
-    echo Uninstall registry key not found.
-)
+reg delete "%uninstallRegistryKey%" /f >nul 2>&1
+echo Uninstall registry key deleted (if it existed).
 
 echo Uninstallation complete.
-
-pause
 exit /b
