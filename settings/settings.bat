@@ -22,7 +22,7 @@ call about.bat
 goto settings
 )
 if "%settings_choice%"=="2" (
-start https://github.com/BenignPigeon/File-Downloader/issues
+start https://github.com/BenignPigeon/File-Converter/issues
 goto settings
 )
 if "%settings_choice%"=="3" goto output_settings
