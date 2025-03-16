@@ -33,7 +33,7 @@ set "batFilesLocal=%LOCALAPPDATA%\Bat-Files\File-Converter"
 set "desktopFolder=%USERPROFILE%\Desktop"
 set "startMenuFolder=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Bat-Files"
 set "shortcutName=File Converter"
-set "uninstallRegistryKey=HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\File Converter"
+set "uninstallRegistryKey=HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\File-Converter"
 
 :: Step 1: Delete the File-Converter folder
 if exist "%batFilesLocal%" (
