@@ -5,7 +5,7 @@ echo           FILE CONVERTER - MULTIFORMAT TOOL
 echo -----------------------------------------------------
 echo Author      : BenignPigeon
 echo Version     : 1.0.0
-echo GitHub      : INSERT LINK HERE
+echo GitHub      : https://github.com/BenignPigeon/File-Downloader
 echo -----------------------------------------------------
 echo DESCRIPTION:
 echo This versatile file converter supports multiple formats 
