@@ -14,7 +14,7 @@ if "%method%"=="explorer" (
 if "%file_path%"=="" (
     echo No file selected, returning to menu...
     timeout /t 2 >nul
-    goto menu
+    exit /b
 )
 
 :: Remove surrounding quotes if present
@@ -25,7 +25,7 @@ echo Selected file: %file_path%
 
 :: If user enters "back", return to menu
 if /i "%file_path%"=="back" (
-    goto menu
+    exit /b
 )
 
 :: Extract full file extension (handles multiple dots properly)
@@ -65,7 +65,7 @@ goto compress_file_again
 :compress_file_again
 set /p "retry=Would you like to try again? (Y/N): "
 if /i "%retry%"=="Y" goto compress_file
-if /i "%retry%"=="N" goto menu
+if /i "%retry%"=="N" exit /b
 echo Invalid choice. Please enter Y or N.
 echo.
 timeout /t 2 >nul
