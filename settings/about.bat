@@ -4,7 +4,7 @@ echo -----------------------------------------------------
 echo           FILE CONVERTER - MULTIFORMAT TOOL
 echo -----------------------------------------------------
 echo Author      : BenignPigeon
-echo Version     : 1.0.0
+echo Version     : %programVersion%
 echo GitHub      : https://github.com/BenignPigeon/File-Converter
 echo -----------------------------------------------------
 echo DESCRIPTION:

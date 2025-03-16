@@ -4,9 +4,11 @@ setlocal EnableDelayedExpansion
 :: Get the current directory of the batch file
 set "script_dir=%~dp0"
 set "config_file=%script_dir%file_converter_config.txt"
+set %programVersion% == "1.0.1"
 
 :: Check if the config file exists, if not, create it with default settings
 if not exist "%config_file%" (
+	echo first_execution=true >"%config_file%"
     echo method=explorer >"%config_file%"
 	echo has_ffmpeg=false >> "%config_file%"
     echo has_pdf_to_docx_dependencies=false >> "%config_file%"
@@ -24,6 +26,7 @@ if not exist "%config_file%" (
 
 :: Read settings from the config file
 for /f "tokens=1,* delims==" %%a in (%config_file%) do (
+	if "%%a"=="first_execution" set "first_execution=%%b"
     if "%%a"=="method" set "method=%%b"
     if "%%a"=="has_ffmpeg" set "has_ffmpeg=%%b"
 	if "%%a"=="has_pdf_to_docx_dependencies" set "has_pdf_to_docx_dependencies=%%b"
@@ -40,6 +43,7 @@ for /f "tokens=1,* delims==" %%a in (%config_file%) do (
 )
 
 :: Trim any leading or trailing spaces from variables
+set "first_execution=%first_execution: =%"
 set "method=%method: =%"
 set "has_ffmpeg=%has_ffmpeg: =%"
 set "has_pdf_to_docx_dependencies=%has_pdf_to_docx_dependencies: =%"
@@ -55,6 +59,15 @@ set "supported_powerpoint_formats=%supported_powerpoint_formats: =%"
 set "supported_excel_formats=%supported_excel_formats: =%"
 
 ::-----------------------------------------------------------------------------------------------------
+
+if "%first_execution%"=="true" (
+	cd uninstall
+	call registry.bat
+	
+	set "first_execution=false"
+	powershell -Command "(Get-Content '%config_file%') | ForEach-Object {if ($_ -match '^first_execution=') {'first_execution=%first_execution%'} else {$_}} | Set-Content '%config_file%'"
+	cd ..
+)
 
 :menu
 cls
