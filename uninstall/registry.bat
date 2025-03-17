@@ -22,9 +22,5 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\%appName%" /v 
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\%appName%" /v "DisplayVersion" /t REG_SZ /d "%programVersion%" /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\%appName%" /v "EstimatedSize" /t REG_DWORD /d 9705 /f
 
-:: Step 2: Add Right-click Uninstall to the context menu for File Converter shortcut
-reg add "HKCU\Software\Classes\*\shell\Uninstall %appName%" /v "MUIVerb" /t REG_SZ /d "Uninstall %appName%" /f
-reg add "HKCU\Software\Classes\*\shell\Uninstall %appName%\command" /v "" /t REG_SZ /d "\"%uninstallPath%\"" /f
-
 echo Uninstaller registered in the registry and right-click uninstall option added.
 exit /b
