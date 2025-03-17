@@ -1,6 +1,10 @@
 @echo off
 setlocal enabledelayedexpansion
 
+cd ..\dependencies
+call universal-parameters.bat
+cd ..\uninstall
+
 :: Define paths using environment variables for user-specific directories
 set "uninstallPath=%USERPROFILE%\AppData\Local\Bat-Files\File-Converter\uninstall\uninstall.bat"
 set "startMenuShortcut=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Bat-Files\File-Converter.lnk"

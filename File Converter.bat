@@ -1,11 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: Get the current directory of the batch file
-set "script_dir=%~dp0"
-set "config_file=%script_dir%file_converter_config.txt"
-set "programVersion=1.0.2"
-
+cd dependencies
+call universal-parameters.bat
+cd ..
 :: Check if the config file exists, if not, create it with default settings
 if not exist "%config_file%" (
 	echo first_execution=true >"%config_file%"
@@ -64,7 +62,7 @@ if "%first_execution%" neq "false" (
 	set "first_execution=false"
 	powershell -Command "(Get-Content '%config_file%') | ForEach-Object {if ($_ -match '^first_execution=') {'first_execution=false'} else {$_}} | Set-Content '%config_file%'"
 )
-
+pause
 :menu
 cls
 echo File Converter
