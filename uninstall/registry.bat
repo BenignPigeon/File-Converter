@@ -22,5 +22,5 @@ reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\%appName%" /v 
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\%appName%" /v "DisplayVersion" /t REG_SZ /d "%programVersion%" /f
 reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\%appName%" /v "EstimatedSize" /t REG_DWORD /d 9705 /f
 
-echo Uninstaller registered in the registry and right-click uninstall option added.
+echo Uninstaller registered.
 exit /b
