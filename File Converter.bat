@@ -62,7 +62,7 @@ if "%first_execution%" neq "false" (
 	set "first_execution=false"
 	powershell -Command "(Get-Content '%config_file%') | ForEach-Object {if ($_ -match '^first_execution=') {'first_execution=false'} else {$_}} | Set-Content '%config_file%'"
 )
-pause
+
 :menu
 cls
 echo File Converter
