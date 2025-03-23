@@ -61,11 +61,11 @@ if %errorlevel% neq 0 (
     set success=false
 )
 
-call eml-to-pdf-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during EML2PDF installation check.
-    set success=false
-)
+@REM call eml-to-pdf-install-check.bat
+@REM if %errorlevel% neq 0 (
+@REM     echo Error occurred during EML2PDF installation check.
+@REM     set success=false
+@REM )
 
 :: After all checks, display the success message if no errors occurred
 if %success%==true (

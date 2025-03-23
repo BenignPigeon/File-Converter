@@ -61,11 +61,11 @@ if %errorlevel% neq 0 (
     set success=false
 )
 
-call eml-to-pdf-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during EML2PDF update check.
-    set success=false
-)
+@REM call eml-to-pdf-update-check.bat
+@REM if %errorlevel% neq 0 (
+@REM     echo Error occurred during EML2PDF update check.
+@REM     set success=false
+@REM )
 
 :: After all checks, display the success message if no errors occurred
 if %success%==true (
