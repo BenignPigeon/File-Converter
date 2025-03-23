@@ -3,7 +3,8 @@ setlocal EnableDelayedExpansion
 
 cd dependencies
 call universal-parameters.bat
-cd ..
+:: You don't need cd.. as that's already in universal parameters.
+
 :: Check if the config file exists, if not, create it with default settings
 if not exist "%config_file%" (
 	echo first_execution=true >"%config_file%"
@@ -24,7 +25,7 @@ if not exist "%config_file%" (
 )
 
 :: Read settings from the config file
-for /f "tokens=1,* delims==" %%a in (%config_file%) do (
+for /f "tokens=1,* delims==" %%a in ('type "%config_file%"') do (
 	if "%%a"=="first_execution" set "first_execution=%%b"
     if "%%a"=="method" set "method=%%b"
     if "%%a"=="has_ffmpeg" set "has_ffmpeg=%%b"
@@ -47,7 +48,7 @@ set "first_execution=%first_execution: =%"
 set "method=%method: =%"
 set "has_ffmpeg=%has_ffmpeg: =%"
 set "has_pdf_to_docx_dependencies=%has_pdf_to_docx_dependencies: =%"
-set "has_pdf_to_png_dependencies=%has_pdf_to_docx_dependencies: =%"
+set "has_pdf_to_png_dependencies=%has_pdf_to_png_dependencies: =%"
 set "has_pdf_ocr_dependencies=%has_pdf_ocr_dependencies: =%"
 set "has_eml_to_pdf_dependencies=%has_eml_to_pdf_dependencies: =%"
 set "output_path_enabled=%output_path_enabled: =%"
@@ -58,7 +59,6 @@ set "supported_video_formats=%supported_video_formats: =%"
 set "supported_word_formats=%supported_word_formats: =%"
 set "supported_powerpoint_formats=%supported_powerpoint_formats: =%"
 set "supported_excel_formats=%supported_excel_formats: =%"
-
 ::-----------------------------------------------------------------------------------------------------
 
 if "%first_execution%" neq "false" (

@@ -4,7 +4,7 @@ cls
 echo Select your file...
 
 :: Use Explorer method if chosen
-if "%method%"=="explorer" (
+if "%method%" neq "cmd" (
     for /f "delims=" %%a in ('powershell -Command "Add-Type -AssemblyName System.Windows.Forms; $FileBrowser = New-Object System.Windows.Forms.OpenFileDialog; $FileBrowser.InitialDirectory = [Environment]::GetFolderPath('Desktop'); $FileBrowser.Filter = 'All Files (*.*)|*.*'; if($FileBrowser.ShowDialog() -eq 'OK') { $FileBrowser.FileName }"') do set "file_path=%%a"
 ) else (
     set /p "file_path=Enter the full path of the file or enter back to go back: "
