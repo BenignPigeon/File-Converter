@@ -53,6 +53,10 @@ if /i "%ext%"=="pdf" (
 	call convert-pdf-file.bat
 	goto :convert_again
 )
+if /i "%ext%"=="eml" (
+	call convert-eml-file.bat
+	goto :convert_again
+)
 for %%I in (%supported_word_formats%) do (
     if /i "%ext%"=="%%I" (
         call convert-word-file.bat

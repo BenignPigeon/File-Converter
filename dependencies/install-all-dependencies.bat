@@ -27,7 +27,7 @@ if %errorlevel% neq 0 (
 
 call pdf-to-docx-install-check.bat
 if %errorlevel% neq 0 (
-    echo Error occurred during PDF to DOCX installation check.
+    echo Error occurred during PDF2DOCX installation check.
     set success=false
 )
 
@@ -58,6 +58,12 @@ if %errorlevel% neq 0 (
 call ocr-my-pdf-install-check.bat
 if %errorlevel% neq 0 (
     echo Error occurred during OCRmyPDF installation check.
+    set success=false
+)
+
+call eml-to-pdf-install-check.bat
+if %errorlevel% neq 0 (
+    echo Error occurred during EML2PDF installation check.
     set success=false
 )
 

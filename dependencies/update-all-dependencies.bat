@@ -27,7 +27,7 @@ if %errorlevel% neq 0 (
 
 call pdf-to-docx-update-check.bat
 if %errorlevel% neq 0 (
-    echo Error occurred during PDF to DOCX update check.
+    echo Error occurred during PDF2DOCX update check.
     set success=false
 )
 
@@ -58,6 +58,12 @@ if %errorlevel% neq 0 (
 call ocr-my-pdf-update-check.bat
 if %errorlevel% neq 0 (
     echo Error occurred during OCRmyPDF update check.
+    set success=false
+)
+
+call eml-to-pdf-update-check.bat
+if %errorlevel% neq 0 (
+    echo Error occurred during EML2PDF update check.
     set success=false
 )
 

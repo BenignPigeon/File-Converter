@@ -2,7 +2,7 @@
 :: Check if pdf2docx is installed
 python -c "import pdf2docx" 2>nul
 if %errorlevel% neq 0 (
-    echo Pdf2Docx not found. Installing now...
+    echo PDF2DOCX not found. Installing now...
     pip install pdf2docx
     if %errorlevel% neq 0 (
         echo Failed to install pdf2docx. Please install it manually.
@@ -10,9 +10,9 @@ if %errorlevel% neq 0 (
 		exit /b    
     )
 
-echo Pdf2Docx installed successfully.
+echo PDF2DOCX installed successfully.
 ) else (
-    echo Pdf2Docx is already installed.
+    echo PDF2DOCX is already installed.
 )
 
 exit /b

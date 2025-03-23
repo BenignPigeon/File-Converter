@@ -1,0 +1,15 @@
+first_execution=false
+method=explorer
+has_ffmpeg=false 
+has_pdf_to_docx_dependencies=false 
+has_pdf_to_png_dependencies=false 
+has_pdf_ocr_dependencies=false 
+has_eml_to_pdf_dependencies=true
+output_path_enabled=0 
+output_path=C:\Users\ben\Desktop 
+supported_image_formats=arw,bmp,cr2,dds,dns,exr,heic,ico,jfif,jpg,jpeg,nef,png,psd,raf,svg,tif,tiff,tga,webp 
+supported_audio_formats=aac,aiff,ape,bik,cda,flac,gif,m4a,m4b,mp3,oga,ogg,ogv,opus,wav,wma 	
+supported_video_formats=3gp,3gpp,avi,bik,flv,gif,m4v,mkv,mp4,mpg,mpeg,mov,ogv,rm,ts,vob,webm,wmv 
+supported_word_formats=docx,odt,doc 
+supported_powerpoint_formats=pptx,ppt 
+supported_excel_formats=xlsx,xls 
