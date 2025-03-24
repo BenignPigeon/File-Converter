@@ -5,6 +5,9 @@ setlocal enabledelayedexpansion
 cls
 echo EML Conversion is still currently being implemented.
 echo Thanks for your patience.
+echo.
+echo One recommended method of converting an EML file to a PDF is to download Thunderbird mail client.
+echo Open the EML with Thunderbird and use the print email to PDF function.
 pause
 echo.
 exit /b
