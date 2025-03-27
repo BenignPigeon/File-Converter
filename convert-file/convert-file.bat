@@ -57,6 +57,16 @@ if /i "%ext%"=="eml" (
 	call convert-eml-file.bat
 	goto :convert_again
 )
+if /i "%ext%"=="musicxml" (
+    cls
+    echo MusicXML Conversion is not supported.
+    echo.
+    echo One recommended method of converting an MusicXML file is to use the free MuseScore Studio app.
+    echo Open the MusicXML with MuseScore Studio and go to publish then export, and select the format you'd like to export it to.
+    pause
+    echo.
+    goto convert_file_dialogue_again
+)
 for %%I in (%supported_word_formats%) do (
     if /i "%ext%"=="%%I" (
         call convert-word-file.bat
@@ -75,7 +85,6 @@ for %%I in (%supported_excel_formats%) do (
 		goto :convert_again
     )
 )
-:: Check if the file is an image from the list of supported image formats
 for %%I in (%supported_image_formats%) do (
     if /i "%ext%"=="%%I" (
         call convert-image-file.bat
@@ -94,7 +103,9 @@ for %%I in (%supported_video_formats%) do (
 		goto :convert_again
     )
 )
+:: If the extension is not in the list of supported file types.
 echo Unsupported file type!
+echo.
 goto convert_file_dialogue_again
 
 :convert_again
