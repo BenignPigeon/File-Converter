@@ -20,7 +20,7 @@ if not exist "%config_file%" (
 	echo supported_image_formats=arw,bmp,cr2,dds,dns,exr,heic,ico,jfif,jpg,jpeg,nef,png,psd,raf,svg,tif,tiff,tga,webp >> "%config_file%"
 	echo supported_audio_formats=aac,aiff,ape,bik,cda,flac,gif,m4a,m4b,mp3,oga,ogg,ogv,opus,wav,wma >> "%config_file%"	
 	echo supported_video_formats=3gp,3gpp,avi,bik,flv,gif,m4v,mkv,mp4,mpg,mpeg,mov,ogv,rm,ts,vob,webm,wmv >> "%config_file%"
-	echo supported_archive_formats=zip,tar,gz,7z >> "%config_file%"
+	echo supported_archive_formats=zip,tar,gz,7z,rar >> "%config_file%"
 	echo supported_word_formats=docx,odt,doc >> "%config_file%"
 	echo supported_powerpoint_formats=pptx,ppt >> "%config_file%"
 	echo supported_excel_formats=xlsx,xls >> "%config_file%"
