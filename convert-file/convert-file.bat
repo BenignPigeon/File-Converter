@@ -67,6 +67,12 @@ if /i "%ext%"=="musicxml" (
     echo.
     goto convert_file_dialogue_again
 )
+for %%I in (%supported_archive_formats%) do (
+    if /i "%ext%"=="%%I" ( 
+        call convert-archive-file.bat
+		goto :convert_again
+    )
+)
 for %%I in (%supported_word_formats%) do (
     if /i "%ext%"=="%%I" (
         call convert-word-file.bat
