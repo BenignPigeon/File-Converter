@@ -29,6 +29,9 @@ goto pdf_to_docx
 cls
 set /p "pages=Enter page numbers (e.g. 1,2,3 or 1-3): "
 
+:: Remove spaces from input
+set "pages=%pages:,=%"
+
 :: Parse the pages input into a list that Python can understand
 set "pages_list="
 

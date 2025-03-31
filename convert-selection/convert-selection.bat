@@ -51,13 +51,24 @@ if /i "%ext%" == "pdf" (
 	) else (
 		call pdf-to-docx-cs.bat :dependency_check
 	)
+    goto convert_selection_again
 )
 if /i "%ext%" == "pptx" (
-echo Converting a selection of a powerpoint file is not yet supported, we will convert it all.
+echo Converting a selection of a powerpoint file is not yet supported, we will convert all of it.
+pause
 )
 if /i "%ext%" == "docx" (
-echo Converting a selection of a word file is not yet supported, we will convert it all.
+echo Converting a selection of a word file is not yet supported, we will convert all of it.
+pause
 )
-
 cd ..\convert-file
 call convert-file.bat :check_file_type_for_conversion
+
+:convert_selection_again
+set /p "retry=Would you like to convert another document? (Y/N): "
+if /i "%retry%"=="Y" call convert-selection.bat
+if /i "%retry%"=="N" exit /b
+echo Invalid choice. Please enter Y or N.
+echo.
+timeout /t 2 >nul
+goto convert_selection_again
