@@ -1,10 +1,10 @@
 -----------------------------------------------------
-          FILE CONVERTER - MULTIFORMAT TOOL
+          # FILE CONVERTER - MULTIFORMAT TOOL
 -----------------------------------------------------
-Test
-```test text```
+## Test
+`test text
 -----------------------------------------------------
-DESCRIPTION:
+## DESCRIPTION:
 This versatile file converter supports multiple formats
 for both video and audio files, including:
 - Video  : MP4, MKV, MOV, AVI, WEBM
@@ -12,7 +12,7 @@ for both video and audio files, including:
 - Images : PNG, JPG, JPEG, WEBM
 - Other  : DOCX, PPTX, XLSX, PDF, ETC...
 -----------------------------------------------------
-DEPENDENCIES:
+## DEPENDENCIES:
 This tool makes use of the following open-source software:
 
 - FFmpeg (LGPLv2.1/GPLv3)      | - ImageMagick (Apache 2.0)
