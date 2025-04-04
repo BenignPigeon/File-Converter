@@ -14,7 +14,8 @@ echo 3. Output Settings
 echo 4. Change Folder Selection Method (Current: %display_method%)
 echo 5. Update Dependencies
 echo 6. Install All Dependencies
-echo 7. Back to Main Menu
+echo 7. Update File Converter to Latest Version
+echo 8. Back to Main Menu
 echo.
 set /p settings_choice="Enter your choice (1-7): "
 if "%settings_choice%"=="1" (
@@ -43,7 +44,12 @@ call install-all-dependencies.bat
 cd ..\settings
 goto settings
 )
-if "%settings_choice%"=="7" exit /b
+if "%settings_choice%"=="7" (
+    @echo off
+    start cmd /c powershell "irm '%programUpdater%' |iex"
+    exit
+)
+if "%settings_choice%"=="8" exit /b
 
 echo Invalid choice, try again.
 timeout /t 2 >nul
