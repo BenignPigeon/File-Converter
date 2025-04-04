@@ -1,6 +1,17 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+:: Check if %APPDATA%\Bat-Files exists, create if it doesn't
+if not exist "%APPDATA%\Bat-Files" (
+    echo Directory "%APPDATA%\Bat-Files" does not exist. Creating now...
+    mkdir "%APPDATA%\Bat-Files"
+) 
+:: Check if %APPDATA%\Bat-Files\File-Converter exists, create if it doesn't
+if not exist "%APPDATA%\Bat-Files\File-Converter" (
+    echo Directory "%APPDATA%\Bat-Files\File-Converter" does not exist. Creating now...
+    mkdir "%APPDATA%\Bat-Files\File-Converter"
+)
+
 cd dependencies
 call universal-parameters.bat
 :: You don't need cd.. as that's already in universal parameters.

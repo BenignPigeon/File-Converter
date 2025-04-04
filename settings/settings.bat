@@ -15,7 +15,8 @@ echo 4. Change Folder Selection Method (Current: %display_method%)
 echo 5. Update Dependencies
 echo 6. Install All Dependencies
 echo 7. Update File Converter to Latest Version
-echo 8. Back to Main Menu
+echo 8. Config File Settings
+echo 9. Back to Main Menu
 echo.
 set /p settings_choice="Enter your choice (1-7): "
 if "%settings_choice%"=="1" (
@@ -49,11 +50,37 @@ if "%settings_choice%"=="7" (
     start cmd /c powershell "irm '%programUpdater%' |iex"
     exit
 )
-if "%settings_choice%"=="8" exit /b
+if "%settings_choice%"=="8" goto config_file_settings
+if "%settings_choice%"=="9" exit /b
 
 echo Invalid choice, try again.
 timeout /t 2 >nul
 goto settings
+
+:config_file_settings
+cls
+echo Config File Settings
+echo ==============
+echo 1. Open Folder
+echo 2. Open File
+echo 3. Back to settings
+echo.
+
+set /p "config_file_choice=Enter your choice (1-3): "
+
+if "%config_file_choice%"=="1" (
+    explorer "%config_file%\.."
+    exit /b
+)
+if "%config_file_choice%"=="2" (
+    start "" "%config_file%"
+    exit /b
+)
+if "%config_file_choice%"=="3" exit /b
+
+echo Invalid choice, try again.
+timeout /t 2 >nul
+goto config_file_settings
 
 :output_settings
 cls
