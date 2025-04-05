@@ -10,10 +10,10 @@ if /i "%has_ffmpeg%" neq "true" (
 )
 cls
 echo How much do you want to compress the %ext% by? (This will take a while)
-echo 1. 10%%
-echo 2. 25%%
-echo 3. 50%%
-echo 4. 75%%
+echo 1. 10%
+echo 2. 25%
+echo 3. 50%
+echo 4. 75%
 echo 5. Back
 echo.
 

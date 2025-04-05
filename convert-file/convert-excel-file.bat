@@ -6,7 +6,7 @@ echo What do you want to convert the %ext% to?
 echo 1. pdf
 echo 2. Back 
 echo.
-set /p format_choice="Enter your choice (1-3): "
+set /p format_choice="Enter your choice (1-2): "
 if "%format_choice%"=="1" goto excel_to_pdf
 if "%format_choice%"=="2" exit /b
 

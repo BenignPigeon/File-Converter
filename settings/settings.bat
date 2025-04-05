@@ -18,7 +18,7 @@ echo 7. Update File Converter to Latest Version
 echo 8. Config File Settings
 echo 9. Back to Main Menu
 echo.
-set /p settings_choice="Enter your choice (1-7): "
+set /p settings_choice="Enter your choice (1-9): "
 if "%settings_choice%"=="1" (
 call about.bat
 goto settings

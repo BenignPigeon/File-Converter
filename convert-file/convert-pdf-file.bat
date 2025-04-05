@@ -6,7 +6,7 @@ echo 2. DOCX
 echo 3. PNG
 echo 4. Back
 echo.
-set /p format_choice="Enter your choice (1-3): "
+set /p format_choice="Enter your choice (1-4): "
 if "%format_choice%"=="1" goto convert_pdf_ocr
 if "%format_choice%"=="2" goto convert_pdf_to_docx
 if "%format_choice%"=="3" goto convert_pdf_to_png
