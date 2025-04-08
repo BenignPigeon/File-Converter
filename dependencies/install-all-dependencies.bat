@@ -7,6 +7,13 @@ set success=true
 cd install-check
 
 :: Call each installation check and check for errors
+
+call 7zip-install-check.bat
+if %errorlevel% neq 0 (
+    echo Error occurred during 7Zip installation check.
+    set success=false
+)
+
 call ffmpeg-install-check.bat
 if %errorlevel% neq 0 (
     echo Error occurred during FFmpeg installation check.

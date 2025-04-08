@@ -7,6 +7,13 @@ set success=true
 cd update-check
 
 :: Call each update check and check for errors
+
+call 7zip-update-check.bat
+if %errorlevel% neq 0 (
+    echo Error occurred during 7Zip update check.
+    set success=false
+)
+
 call ffmpeg-update-check.bat
 if %errorlevel% neq 0 (
     echo Error occurred during FFmpeg update check.
