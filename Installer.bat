@@ -124,5 +124,4 @@ if exist "%binFolder%" (
 echo.
 echo All shortcuts created successfully.
 echo.
-pause
 exit /b

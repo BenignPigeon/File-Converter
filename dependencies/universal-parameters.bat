@@ -2,6 +2,6 @@ cd ..
 set "script_dir=%CD%"
 set "config_file=%APPDATA%\Bat-Files\File-Converter\file_converter_config.txt"
 set "programVersion=1.2.3"
-set "programUpdater=https://gist.githubusercontent.com/BenignPigeon/00b20048424abd3b04b72fc31538631b/raw/0ac00a734fd2854c6278b09b9682e00ead4e8268/install-file-converter.ps1"
+set "programUpdater=https://gist.githubusercontent.com/BenignPigeon/67e6c94c9d73ec09fae74d3f3e28c468/raw/28ceda4def8543dac25e08cb296bd86ef117e259/install-youtube-downloader.ps1"
 
 exit /b
