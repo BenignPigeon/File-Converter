@@ -19,7 +19,7 @@ set "binFolder=%CD%\bin"
 :: Ensure Desktop folder exists, or ask user for correct path
 if not exist "%desktopFolder%" (
     echo Desktop doesn't exist at "%desktopFolder%"
-    set /p desktopFolder=Enter the full path to your Desktop (e.g. C:\Users\YourName\OneDrive\Desktop): 
+    set /p desktopFolder="Enter the full path to your Desktop (e.g. C:\Users\YourName\OneDrive\Desktop): "
     if not exist "!desktopFolder!" (
         echo The path "!desktopFolder!" still does not exist. Exiting...
         pause
@@ -30,12 +30,13 @@ if not exist "%desktopFolder%" (
 :: Ensure Start Menu folder exists, or ask user for correct path
 if not exist "%startMenuPrograms%" (
     echo Start Menu folder doesn't exist at "%startMenuPrograms%"
-    set /p startMenuPrograms=Enter the full path to your Start Menu Programs folder (e.g. C:\Users\YourName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs): 
+    set /p startMenuPrograms="Enter the full path to your Start Menu Programs folder (e.g. C:\Users\YourName\AppData\Roaming\Microsoft\Windows\Start Menu\Programs): "
     if not exist "!startMenuPrograms!" (
         echo The path "!startMenuPrograms!" still does not exist. Exiting...
         pause
         exit /b 1
     )
+)
 
 :: Create "Bat Files" folder in LOCAL if it doesn't exist
 if not exist "%batFilesLocal%" (
