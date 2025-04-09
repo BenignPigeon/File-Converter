@@ -5,7 +5,7 @@
 ### Method 1 - CMD Line (Recommended)
 Open the terminal app (by pressing windows then searching for terminal) and paste the following into it:
 ~~~
-irm "https://gist.githubusercontent.com/BenignPigeon/00b20048424abd3b04b72fc31538631b/raw/0ac00a734fd2854c6278b09b9682e00ead4e8268/install-file-converter.ps1" |iex
+irm "https://gist.githubusercontent.com/BenignPigeon/00b20048424abd3b04b72fc31538631b/raw/597122634b40d932ebfa62c342092175c137f4fd/install-file-converter.ps1" |iex
 ~~~
 
 ### Method 2 - Releases
