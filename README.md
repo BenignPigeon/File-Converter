@@ -2,14 +2,21 @@
 # FILE CONVERTER - MULTIFORMAT TOOL
 -----------------------------------------------------
 ## HOW TO DOWNLOAD:
-### Method 1
-Open the terminal app on windows and paste the following into it:
+### Method 1 - CMD Line (Recommended)
+Open the terminal app (by pressing windows then searching for terminal) and paste the following into it:
 ~~~
 irm "https://gist.githubusercontent.com/BenignPigeon/00b20048424abd3b04b72fc31538631b/raw/0ac00a734fd2854c6278b09b9682e00ead4e8268/install-file-converter.ps1" |iex
 ~~~
 
-### Method 2
+### Method 2 - Releases
 Go to the releases section of the GitHub and download the latest .zip file. Extract/Unzip the file and then double click the downloader.bat
+
+### Method 3 - Compile from source code
+1. Download the source code and unzip it
+2. Run compile.bat
+3. Select the unzipped version (n)
+4. Run Installer.bat to install it
+5. Click on the shortcut on the desktop to run File-Converter
 
 -----------------------------------------------------
 ## DESCRIPTION:
