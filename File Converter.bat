@@ -79,6 +79,9 @@ set "supported_excel_formats=%supported_excel_formats: =%"
 ::-----------------------------------------------------------------------------------------------------
 
 if "%first_execution%" neq "false" (
+	cd dependencies
+	call python-add-path.bat
+	cd ..
 	set "first_execution=false"
 	powershell -Command "(Get-Content '%config_file%') | ForEach-Object {if ($_ -match '^first_execution=') {'first_execution=false'} else {$_}} | Set-Content '%config_file%'"
 )
