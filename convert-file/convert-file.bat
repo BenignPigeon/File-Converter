@@ -65,7 +65,7 @@ if /i "%ext%"=="musicxml" (
     echo Open the MusicXML with MuseScore Studio and go to publish then export, and select the format you'd like to export it to.
     pause
     echo.
-    goto convert_file_dialogue_again
+    goto convert_file
 )
 for %%I in (%supported_archive_formats%) do (
     if /i "%ext%"=="%%I" ( 
@@ -112,9 +112,15 @@ for %%I in (%supported_video_formats%) do (
 :: If the extension is not in the list of supported file types.
 echo Unsupported file type!
 echo.
-goto convert_file_dialogue_again
+echo Returning to menu...
+pause
+exit /b
 
 :convert_again
+REM Check error level returned from subscript
+if %errorlevel%==99 (
+    exit /b
+
 set /p "retry=Would you like to convert another document? (Y/N): "
 if /i "%retry%"=="Y" call convert-file.bat
 if /i "%retry%"=="N" exit /b

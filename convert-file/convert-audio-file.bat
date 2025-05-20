@@ -28,7 +28,7 @@ if "%format_choice%"=="3" set "convert_to_extension=wav"
 if "%format_choice%"=="4" set "convert_to_extension=aac -vf scale=256:256"
 if "%format_choice%"=="5" set "convert_to_extension=flac"
 if "%format_choice%"=="6" set "convert_to_extension=ogg"
-if "%format_choice%"=="7" exit /b
+if "%format_choice%"=="7" exit /b 99
 
 :: Validate if the format choice is correct
 if not defined convert_to_extension (

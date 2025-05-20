@@ -60,7 +60,11 @@ for %%I in (%supported_video_formats%) do (
     )
 )
 echo Unsupported file type for compression!
-goto compress_file_again
+
+echo.
+echo Returning to menu...
+pause
+goto exit /b
 
 :compress_file_again
 set /p "retry=Would you like to try again? (Y/N): "

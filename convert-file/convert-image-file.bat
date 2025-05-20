@@ -100,7 +100,7 @@ if "%format_choice%"=="4" (
 	echo.
     exit /b
 )
-if "%format_choice%"=="5" goto menu
+if "%format_choice%"=="5" exit /b 99
 
 echo invalid choice try again...
 timeout /t 2 >nul

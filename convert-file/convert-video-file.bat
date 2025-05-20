@@ -39,7 +39,7 @@ if "%format_choice%"=="3" set "convert_to_extension=mkv"
 if "%format_choice%"=="4" set "convert_to_extension=mov"
 if "%format_choice%"=="5" set "convert_to_extension=webm" & set "extra_params=-c:v libvpx -c:a libopus -b:a 96k"
 if "%format_choice%"=="6" set "convert_to_extension=avi"
-if "%format_choice%"=="7" goto menu
+if "%format_choice%"=="7" exit /b 99
 
 :: If invalid choice, retry
 if "%convert_to_extension%"=="" (

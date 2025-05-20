@@ -8,7 +8,7 @@ echo 2. Back
 echo.
 set /p format_choice="Enter your choice (1-2): "
 if "%format_choice%"=="1" goto excel_to_pdf
-if "%format_choice%"=="2" exit /b
+if "%format_choice%"=="2" exit /b 99
 
 echo invalid choice try again...
 timeout /t 2 >nul

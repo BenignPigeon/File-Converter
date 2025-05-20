@@ -10,7 +10,7 @@ set /p format_choice="Enter your choice (1-4): "
 if "%format_choice%"=="1" goto convert_pdf_ocr
 if "%format_choice%"=="2" goto convert_pdf_to_docx
 if "%format_choice%"=="3" goto convert_pdf_to_png
-if "%format_choice%"=="4" exit /b
+if "%format_choice%"=="4" exit /b 99
 
 echo Invalid choice, try again.
 timeout /t 2 >nul

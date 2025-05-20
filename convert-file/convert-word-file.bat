@@ -10,7 +10,7 @@ echo.
 set /p format_choice="Enter your choice (1-3): "
 if "%format_choice%"=="1" goto convert_word_to_pdf
 if "%format_choice%"=="2" goto convert_word_to_png
-if "%format_choice%"=="3" exit /b
+if "%format_choice%"=="3" exit /b 99
 
 echo invalid choice try again...
 timeout /t 2 >nul

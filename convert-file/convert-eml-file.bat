@@ -20,7 +20,7 @@ echo 2. Back
 echo.
 set /p format_choice="Enter your choice (1-2): "
 if "%format_choice%"=="1" goto convert_eml_to_pdf
-if "%format_choice%"=="2" exit /b
+if "%format_choice%"=="2" exit /b 99
 
 echo Invalid choice, try again.
 timeout /t 2 >nul
