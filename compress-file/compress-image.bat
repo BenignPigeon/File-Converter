@@ -35,7 +35,7 @@ if "%format_choice%"=="1" (
 		echo Conversion successful
 	)
 	echo.
-    goto image_compress_success
+    exit /b
 )
 if "%format_choice%"=="2" (
     :: Check if output_path is enabled
@@ -55,7 +55,7 @@ if "%format_choice%"=="2" (
 		echo Conversion successful
 	)
 	echo.
-    goto image_compress_success
+    exit /b
 )
 if "%format_choice%"=="3" (
     :: Check if output_path is enabled
@@ -75,7 +75,7 @@ if "%format_choice%"=="3" (
 		echo Conversion successful
 	)
 	echo.
-    goto image_compress_success
+    exit /b
 )
 if "%format_choice%"=="4" (
     :: Check if output_path is enabled
@@ -95,19 +95,10 @@ if "%format_choice%"=="4" (
 		echo Conversion successful
 	)
 	echo.
-    goto image_compress_success
+    exit /b
 )
-if "%format_choice%"=="5" exit /b
+if "%format_choice%"=="5" exit /b 99
 
 echo invalid choice try again...
 timeout /t 2 >nul
 goto compress_image
-
-:image_compress_success
-set /p "retry=Would you like to compress another image? (Y/N): "
-if /i "%retry%"=="Y" call compress-file.bat
-if /i "%retry%"=="N" exit /b
-echo Invalid choice. Please enter Y or N.
-echo.
-timeout /t 2 >nul
-goto image_compress_success

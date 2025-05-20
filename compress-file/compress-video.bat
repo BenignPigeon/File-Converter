@@ -53,7 +53,7 @@ if "%format_choice%"=="1" (
         echo Conversion successful with %encoder_name%.
     )
     echo.
-    goto video_compress_success
+    exit /b
 )
 
 if "%format_choice%"=="2" (
@@ -83,7 +83,7 @@ if "%format_choice%"=="2" (
         echo Conversion successful with %encoder_name%.
     )
     echo.
-    goto video_compress_success
+    exit /b
 )
 
 if "%format_choice%"=="3" (
@@ -113,7 +113,7 @@ if "%format_choice%"=="3" (
         echo Conversion successful with %encoder_name%.
     )
     echo.
-    goto video_compress_success
+    exit /b
 )
 
 if "%format_choice%"=="4" (
@@ -143,19 +143,11 @@ if "%format_choice%"=="4" (
         echo Conversion successful with %encoder_name%.
     )
     echo.
-    goto video_compress_success
+    exit /b
 )
 
-if "%format_choice%"=="5" exit /b
+if "%format_choice%"=="5" exit /b 99
+
 echo invalid choice try again...
 timeout /t 2 >nul
 goto compress_video
-
-:video_compress_success
-set /p "retry=Would you like to compress another video? (Y/N): "
-if /i "%retry%"=="Y" call compress-file.bat
-if /i "%retry%"=="N" exit /b
-echo Invalid choice. Please enter Y or N.
-echo.
-timeout /t 2 >nul
-goto video_compress_success

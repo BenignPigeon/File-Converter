@@ -49,14 +49,14 @@ goto check_file_type_for_compression
 for %%I in (%supported_image_formats%) do (
     if /i "%ext%"=="%%I" (
         call compress-image.bat
-		exit /b
+		goto compress_file_again
     )
 )
 
 for %%I in (%supported_video_formats%) do (
     if /i "%ext%"=="%%I" (
 		call compress-video.bat
-		exit /b
+		goto compress_file_again
     )
 )
 echo Unsupported file type for compression!
@@ -67,6 +67,12 @@ pause
 goto exit /b
 
 :compress_file_again
+
+REM Check error level returned from subscript
+if %errorlevel%==99 (
+    exit /b
+)
+
 set /p "retry=Would you like to try again? (Y/N): "
 if /i "%retry%"=="Y" goto compress_file
 if /i "%retry%"=="N" exit /b
