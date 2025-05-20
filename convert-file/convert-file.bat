@@ -120,6 +120,7 @@ exit /b
 REM Check error level returned from subscript
 if %errorlevel%==99 (
     exit /b
+)
 
 set /p "retry=Would you like to convert another document? (Y/N): "
 if /i "%retry%"=="Y" call convert-file.bat
