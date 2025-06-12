@@ -51,7 +51,7 @@ echo Converting...
 ffmpeg -i "!file_path!" "!audio_path!"
 
 :: Check if the conversion was successful
-if %errorlevel% neq 0 (
+if !errorlevel! neq 0 (
     echo Failed
 ) else (
     echo Conversion successful
@@ -81,17 +81,17 @@ cls
 		set /p "image_file=Enter the full path of the file or enter back to go back: "
 	)
 	:: Check if the user pressed Cancel/Entered nothing (image_file is empty)
-	if "%image_file%"=="" (
+	if "!image_file!"=="" (
 		echo No file selected, returning...
 		timeout /t 2 >nul
 		goto audio_to_mp4
 	)
 
 	:: Remove surrounding quotes if present
-	set image_file=%image_file:"=%
+    set "image_file=!image_file:"=!"
 
 	echo.
-	echo Selected file: %image_file%
+	echo Selected file: !image_file!
 
 	:: If user enters "back", return to audio_to_mp4
 	if /i "%image_file%"=="back" (
@@ -105,12 +105,12 @@ cls
         echo Using same directory
         for %%F in ("%file_path%") do set "video_path=%%~dpnF.mp4"
     )
-
+    
     echo Converting...
 
-    ffmpeg -loop 1 -i "!image_file!" -i "!file_path!" %encoder% -c:a aac -b:a 192k -shortest "!video_path!"
+    ffmpeg -loop 1 -i "!image_file!" -i "!file_path!" -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" %encoder% -c:a aac -b:a 192k -shortest "!video_path!"
 	
-	if %errorlevel% neq 0 (
+	if !errorlevel! neq 0 (
 		echo Failed
 	) else (
 		echo Conversion successful
@@ -131,7 +131,7 @@ if "%format_choice%"=="2" (
 
     ffmpeg -f lavfi -i color=c=black:s=1920x1080:d=10 -i "!file_path!" %encoder% -c:a aac -b:a 192k -shortest "!video_path!"
 	
-	if %errorlevel% neq 0 (
+	if !errorlevel! neq 0 (
 		echo Failed
 	) else (
 		echo Conversion successful
@@ -191,7 +191,7 @@ if "%format_choice%"=="3" (
 	echo ffmpeg -f lavfi -i color=c=!video_colour!:s=1920x1080:d=10 -i "%file_path%" %encoder% -c:a aac -b:a 192k -shortest "%video_path%"
     ffmpeg -f lavfi -i color=c=!video_colour!:s=1920x1080:d=10 -i "%file_path%" %encoder% -c:a aac -b:a 192k -shortest "%video_path%"
 
-    if %errorlevel% neq 0 (
+    if !errorlevel! neq 0 (
         echo Failed
     ) else (
         echo Conversion successful
