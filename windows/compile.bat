@@ -24,7 +24,7 @@ if not defined programVersion (
 
 :: Define the output folder name on Desktop
 set "desktopFolder=%USERPROFILE%\Desktop"
-set "outputFolder=%desktopFolder%\File-Converter-v%programVersion%"
+set "outputFolder=%desktopFolder%\File-Converter-v%programVersion%-Windows"
 set "targetBinSubfolder=%outputFolder%\bin\File-Converter"
 
 :: Step 3: Create the versioned output folder and bin subfolder structure
