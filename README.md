@@ -3,9 +3,22 @@
 -----------------------------------------------------
 ## HOW TO DOWNLOAD:
 ### Method 1 - CMD Line (Recommended)
+#### Windows
 Open the terminal app (by pressing windows then searching for terminal) and paste the following into it:
 ~~~
-irm "https://gist.githubusercontent.com/BenignPigeon/00b20048424abd3b04b72fc31538631b/raw/597122634b40d932ebfa62c342092175c137f4fd/install-file-converter.ps1" |iex
+irm "https://gist.githubusercontent.com/BenignPigeon/00b20048424abd3b04b72fc31538631b/raw/9450b837bddcb24c0cac0181d441b42e5cdd7cba/install-file-converter-windows.ps1" |iex
+~~~
+
+#### Linux (still in development)
+Open the Linux terminal (will vary depending on OS)
+E.G. Debian/Ubuntu: Ctrl+Alt+T
+     Fedora: Ctrl+Alt+T
+     Mint: Ctrl+Alt+T
+     Arch (GNOME/KDE): Ctrl+Alt+T
+
+Paste the following into it:
+~~~
+link will be provided when available
 ~~~
 
 ### Method 2 - Releases
