@@ -53,6 +53,10 @@ if /i "%ext%"=="pdf" (
 	call convert-pdf-file.bat
 	goto :convert_again
 )
+if /i "%ext%"=="md" (
+	call convert-md-file.bat
+	goto :convert_again
+)
 if /i "%ext%"=="eml" (
 	call convert-eml-file.bat
 	goto :convert_again
