@@ -57,6 +57,10 @@ if /i "%ext%"=="md" (
 	call convert-md-file.bat
 	goto :convert_again
 )
+if /i "%ext%"=="tex" (
+	call convert-tex-file.bat
+	goto :convert_again
+)
 if /i "%ext%"=="eml" (
 	call convert-eml-file.bat
 	goto :convert_again
