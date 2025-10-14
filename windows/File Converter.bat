@@ -14,74 +14,161 @@ if not exist "%APPDATA%\Bat-Files\File-Converter" (
 
 cd dependencies
 call universal-parameters.bat
-:: You don't need cd.. as that's already in universal parameters.
 
-:: Check if the config file exists, if not, create it with default settings
+:: ============================================================================
+:: Define all default configuration settings in one place
+:: ============================================================================
+set "defaults_count=0"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=first_execution=true"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=method=explorer"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=has_ffmpeg=false"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=has_7zip=false"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=has_pandoc=false"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=has_tinytex_packages=false"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=has_pdf_to_docx_dependencies=false"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=has_pdf_to_png_dependencies=false"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=has_pdf_ocr_dependencies=false"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=output_path_enabled=0"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=output_path=%USERPROFILE%\Desktop"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=supported_image_formats=arw,bmp,cr2,dds,dns,exr,heic,ico,jfif,jpg,jpeg,nef,png,psd,raf,svg,tif,tiff,tga,webp"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=supported_audio_formats=aac,aiff,ape,bik,cda,flac,gif,m4a,m4b,mp3,oga,ogg,ogv,opus,wav,wma"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=supported_video_formats=3gp,3gpp,avi,bik,flv,gif,m4v,mkv,mp4,mpg,mpeg,mov,ogv,rm,ts,vob,webm,wmv"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=supported_archive_formats=zip,tar,gz,7z,rar"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=supported_word_formats=docx,odt,doc"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=supported_powerpoint_formats=pptx,ppt"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=supported_excel_formats=xlsx,xls"
+
+:: ============================================================================
+:: DEBUG: Check config_file variable
+:: ============================================================================
+echo Config file path: "%config_file%"
+if not defined config_file (
+    echo ERROR: config_file variable is not defined!
+    pause
+    exit /b 1
+)
+
+:: Check if path contains problematic characters
+echo "%config_file%" | find "&" >nul && echo WARNING: Path contains ampersand - may cause issues!
+echo "%config_file%" | find "!" >nul && echo WARNING: Path contains exclamation mark - may cause issues!
+
+echo Defaults Count: "!defaults_count!"
+
+:: ============================================================================
+:: Create config file if it doesn't exist
+:: ============================================================================
 if not exist "%config_file%" (
-	echo first_execution=true >"%config_file%"
-    echo method=explorer >> "%config_file%"
-	echo has_ffmpeg=false >> "%config_file%"
-	echo has_7zip=false >> "%config_file%"
-	echo has_pandoc=false >> "%config_file%"
-	echo has_tinytex_packages=false >> "%config_file%"
-    echo has_pdf_to_docx_dependencies=false >> "%config_file%"
-	echo has_pdf_to_png_dependencies=false >> "%config_file%"
-	echo has_pdf_ocr_dependencies=false >> "%config_file%"
-	@REM echo has_eml_to_pdf_dependencies=false >> "%config_file%"
-	echo output_path_enabled=0 >> "%config_file%"
-	echo output_path=%USERPROFILE%\Desktop >> "%config_file%"
-	echo supported_image_formats=arw,bmp,cr2,dds,dns,exr,heic,ico,jfif,jpg,jpeg,nef,png,psd,raf,svg,tif,tiff,tga,webp >> "%config_file%"
-	echo supported_audio_formats=aac,aiff,ape,bik,cda,flac,gif,m4a,m4b,mp3,oga,ogg,ogv,opus,wav,wma >> "%config_file%"	
-	echo supported_video_formats=3gp,3gpp,avi,bik,flv,gif,m4v,mkv,mp4,mpg,mpeg,mov,ogv,rm,ts,vob,webm,wmv >> "%config_file%"
-	echo supported_archive_formats=zip,tar,gz,7z,rar >> "%config_file%"
-	echo supported_word_formats=docx,odt,doc >> "%config_file%"
-	echo supported_powerpoint_formats=pptx,ppt >> "%config_file%"
-	echo supported_excel_formats=xlsx,xls >> "%config_file%"
+    echo Creating new config file: %config_file%
+    for /L %%i in (1,1,!defaults_count!) do (
+        echo !default[%%i]! >> "%config_file%"
+    )
+) else (
+	echo test 1
+    :: ========================================================================
+    :: Config file exists - check for missing keys and append them
+    :: ========================================================================
+    for /L %%i in (1,1,!defaults_count!) do (
+		echo test 2
+		pause
+        set "line=!default[%%i]!"
+        for /f "tokens=1 delims==" %%a in ("!line!") do (
+            set "key=%%a"
+            set "key_exists=false"
+            
+            :: Check if this key exists in the config file
+            for /f "tokens=1 delims==" %%b in ('type "%config_file%"') do (
+                if "%%b"=="!key!" set "key_exists=true"
+            )
+            
+            :: If key doesn't exist, append it
+            if "!key_exists!"=="false" (
+                echo Missing key detected: !key! - adding default value
+                echo !line! >> "%config_file%"
+            )
+        )
+    )
 )
 
-:: Read settings from the config file
+echo %CD%
+
+:: ============================================================================
+:: Read all settings from config file into variables
+:: ============================================================================
 for /f "tokens=1,* delims==" %%a in ('type "%config_file%"') do (
-	if "%%a"=="first_execution" set "first_execution=%%b"
-    if "%%a"=="method" set "method=%%b"
-    if "%%a"=="has_ffmpeg" set "has_ffmpeg=%%b"
-	if "%%a"=="has_7zip" set "has_7zip=%%b"
-	if "%%a"=="has_pandoc" set "has_pandoc=%%b"
-	if "%%a"=="has_tinytex_packages" set "has_tinytex_packages=%%b"
-	if "%%a"=="has_pdf_to_docx_dependencies" set "has_pdf_to_docx_dependencies=%%b"
-	if "%%a"=="has_pdf_to_png_dependencies" set "has_pdf_to_png_dependencies=%%b"
-	if "%%a"=="has_pdf_ocr_dependencies" set "has_pdf_ocr_dependencies=%%b"
-	@REM if "%%a"=="has_eml_to_pdf_dependencies" set "has_eml_to_pdf_dependencies=%%b"
-	if "%%a"=="output_path_enabled" set "output_path_enabled=%%b"
-	if "%%a"=="output_path" set "output_path=%%b"
-	if "%%a"=="supported_image_formats" set "supported_image_formats=%%b"
-	if "%%a"=="supported_audio_formats" set "supported_audio_formats=%%b"
-	if "%%a"=="supported_video_formats" set "supported_video_formats=%%b"
-	if "%%a"=="supported_archive_formats" set "supported_archive_formats=%%b"
-	if "%%a"=="supported_word_formats" set "supported_word_formats=%%b"
-	if "%%a"=="supported_powerpoint_formats" set "supported_powerpoint_formats=%%b"
-	if "%%a"=="supported_excel_formats" set "supported_excel_formats=%%b"
+    set "%%a=%%b"
 )
 
-:: Trim any leading or trailing spaces from variables
-set "first_execution=%first_execution: =%"
-set "method=%method: =%"
-set "has_ffmpeg=%has_ffmpeg: =%"
-set "has_7zip=%has_7zip: =%"
-set "has_pandoc=%has_pandoc: =%"
-set "has_tinytex_packages=%has_tinytex_packages: =%"
-set "has_pdf_to_docx_dependencies=%has_pdf_to_docx_dependencies: =%"
-set "has_pdf_to_png_dependencies=%has_pdf_to_png_dependencies: =%"
-set "has_pdf_ocr_dependencies=%has_pdf_ocr_dependencies: =%"
-@REM set "has_eml_to_pdf_dependencies=%has_eml_to_pdf_dependencies: =%"
-set "output_path_enabled=%output_path_enabled: =%"
-set "output_path=%output_path: =%"
-set "supported_image_formats=%supported_image_formats: =%"
-set "supported_audio_formats=%supported_audio_formats: =%"
-set "supported_video_formats=%supported_video_formats: =%"
-set "supported_archive_formats=%supported_archive_formats: =%"
-set "supported_word_formats=%supported_word_formats: =%"
-set "supported_powerpoint_formats=%supported_powerpoint_formats: =%"
-set "supported_excel_formats=%supported_excel_formats: =%"
+:: ============================================================================
+:: Trim leading and trailing spaces from all variables (optional)
+:: ============================================================================
+for /L %%i in (1,1,!defaults_count!) do (
+    set "line=!default[%%i]!"
+    for /f "tokens=1 delims==" %%a in ("!line!") do (
+        set "var_name=%%a"
+        call set "var_value=%%!var_name!%%"
+        
+        :: Trim spaces by reassigning
+        for /f "tokens=* delims= " %%b in ("!var_value!") do set "var_value=%%b"
+        set "!var_name!=!var_value!"
+    )
+)
+
+:: ============================================================================
+:: Display loaded configuration (optional - remove in production)
+:: ============================================================================
+echo.
+echo Configuration loaded:
+echo =====================
+for /L %%i in (1,1,!defaults_count!) do (
+    set "line=!default[%%i]!"
+    for /f "tokens=1 delims==" %%a in ("!line!") do (
+        set "var_name=%%a"
+        call echo %%a = %%!var_name!%%
+    )
+)
+echo.
+
+:: ============================================================================
+:: Your script continues here...
+:: ============================================================================
+echo Ready to proceed with file conversion operations.
+pause
 ::-----------------------------------------------------------------------------------------------------
 
 if "%first_execution%" neq "false" (
