@@ -1,17 +1,18 @@
 setlocal enabledelayedexpansion
 @echo off
-if /i "%has_pandoc%" neq "true" (
+if /i "%has_latex%" neq "true" (
     echo Checking dependencies...
     cd ..\dependencies\install-check
-    call pandoc-install-check.bat
+    call tinytex-install-check.bat
+    call tinytex-packages-install-check.bat
     cd ..\..\convert-file
 
-    :: Check if has_pandoc is not true and update the line
+    :: Check if has_latex is not true and update the line
         for /f "tokens=1,* delims==" %%a in (%config_file%) do (
-            if /i "%%a"=="has_pandoc" (
+            if /i "%%a"=="has_latex" (
                 set "line=%%a=%%b"
                 if /i "%%b" neq "true" (
-                    powershell -Command "(Get-Content '%config_file%') | ForEach-Object {if ($_ -match '^has_pandoc=') {'has_pandoc=true'} else {$_}} | Set-Content '%config_file%'"
+                    powershell -Command "(Get-Content '%config_file%') | ForEach-Object {if ($_ -match '^has_latex=') {'has_latex=true'} else {$_}} | Set-Content '%config_file%'"
                 )
             )
         )

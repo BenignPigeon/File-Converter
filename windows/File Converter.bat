@@ -1,6 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+echo Loading...
+
 :: Check if %APPDATA%\Bat-Files exists, create if it doesn't
 if not exist "%APPDATA%\Bat-Files" (
     echo Directory "%APPDATA%\Bat-Files" does not exist. Creating now...
@@ -34,6 +36,9 @@ set "default[!defaults_count!]=has_7zip=false"
 
 set /a defaults_count+=1
 set "default[!defaults_count!]=has_pandoc=false"
+
+set /a defaults_count+=1
+set "default[!defaults_count!]=has_latex=false"
 
 set /a defaults_count+=1
 set "default[!defaults_count!]=has_tinytex_packages=false"
@@ -74,21 +79,21 @@ set "default[!defaults_count!]=supported_powerpoint_formats=pptx,ppt"
 set /a defaults_count+=1
 set "default[!defaults_count!]=supported_excel_formats=xlsx,xls"
 
-:: ============================================================================
-:: DEBUG: Check config_file variable
-:: ============================================================================
-echo Config file path: "%config_file%"
-if not defined config_file (
-    echo ERROR: config_file variable is not defined!
-    pause
-    exit /b 1
-)
+@REM :: ============================================================================
+@REM :: DEBUG: Check config_file variable
+@REM :: ============================================================================
+@REM echo Config file path: "%config_file%"
+@REM if not defined config_file (
+@REM     echo ERROR: config_file variable is not defined!
+@REM     pause
+@REM     exit /b 1
+@REM )
 
-:: Check if path contains problematic characters
-echo "%config_file%" | find "&" >nul && echo WARNING: Path contains ampersand - may cause issues!
-echo "%config_file%" | find "!" >nul && echo WARNING: Path contains exclamation mark - may cause issues!
+@REM :: Check if path contains problematic characters
+@REM echo "%config_file%" | find "&" >nul && echo WARNING: Path contains ampersand - may cause issues!
+@REM echo "%config_file%" | find "!" >nul && echo WARNING: Path contains exclamation mark - may cause issues!
 
-echo Defaults Count: "!defaults_count!"
+@REM echo Defaults Count: "!defaults_count!"
 
 :: ============================================================================
 :: Create config file if it doesn't exist
@@ -99,13 +104,10 @@ if not exist "%config_file%" (
         echo !default[%%i]! >> "%config_file%"
     )
 ) else (
-	echo test 1
     :: ========================================================================
     :: Config file exists - check for missing keys and append them
     :: ========================================================================
     for /L %%i in (1,1,!defaults_count!) do (
-		echo test 2
-		pause
         set "line=!default[%%i]!"
         for /f "tokens=1 delims==" %%a in ("!line!") do (
             set "key=%%a"
@@ -124,8 +126,6 @@ if not exist "%config_file%" (
         )
     )
 )
-
-echo %CD%
 
 :: ============================================================================
 :: Read all settings from config file into variables
@@ -149,26 +149,26 @@ for /L %%i in (1,1,!defaults_count!) do (
     )
 )
 
-:: ============================================================================
-:: Display loaded configuration (optional - remove in production)
-:: ============================================================================
-echo.
-echo Configuration loaded:
-echo =====================
-for /L %%i in (1,1,!defaults_count!) do (
-    set "line=!default[%%i]!"
-    for /f "tokens=1 delims==" %%a in ("!line!") do (
-        set "var_name=%%a"
-        call echo %%a = %%!var_name!%%
-    )
-)
-echo.
+@REM :: ============================================================================
+@REM :: Display loaded configuration (optional - remove in production)
+@REM :: ============================================================================
+@REM echo.
+@REM echo Configuration loaded:
+@REM echo =====================
+@REM for /L %%i in (1,1,!defaults_count!) do (
+@REM     set "line=!default[%%i]!"
+@REM     for /f "tokens=1 delims==" %%a in ("!line!") do (
+@REM         set "var_name=%%a"
+@REM         call echo %%a = %%!var_name!%%
+@REM     )
+@REM )
+@REM echo.
 
 :: ============================================================================
 :: Your script continues here...
 :: ============================================================================
 echo Ready to proceed with file conversion operations.
-pause
+
 ::-----------------------------------------------------------------------------------------------------
 
 if "%first_execution%" neq "false" (

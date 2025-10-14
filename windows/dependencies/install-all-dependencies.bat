@@ -1,100 +1,49 @@
 @echo off
+setlocal enabledelayedexpansion
 
-:install_all_dependencies
-:: Initialize a flag to track success
+:: Go to the folder containing dependency install scripts
+cd install-check || (
+    echo Folder "install-check" not found!
+    exit /b 1
+)
+
+:: Get a list of all .bat files
+set count=0
+for %%f in (*.bat) do (
+    set /a count+=1
+)
+
+if %count%==0 (
+    echo No dependency scripts found in install-check.
+    cd..
+    exit /b 1
+)
+
+:: Initialize success flag
 set success=true
+set index=0
 
-cd install-check
-
-:: Call each installation check and check for errors
-
-call 7zip-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during 7Zip installation check.
-    set success=false
-)
-
-call ffmpeg-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during FFmpeg installation check.
-    set success=false
-)
-
-call python-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Python installation check.
-    set success=false
-)
-
-call pip-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Pip installation check.
-    set success=false
-)
-
-call pdf-to-docx-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during PDF2DOCX installation check.
-    set success=false
-)
-
-call image-magick-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during ImageMagick installation check.
-    set success=false
-)
-
-call choco-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Chocolatey installation check.
-    set success=false
-)
-
-call ghostscript-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Ghostscript installation check.
-    set success=false
-)
-
-call tesseract-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Tesseract installation check.
-    set success=false
-)
-
-call ocr-my-pdf-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during OCRmyPDF installation check.
-    set success=false
-)
-
-call pandoc-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Pandoc installation check.
-    set success=false
-)
-call tinytex-packages-install-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during TinyTex packages installation check.
-    set success=false
-)
-
-@REM call eml-to-pdf-install-check.bat
-@REM if %errorlevel% neq 0 (
-@REM     echo Error occurred during EML2PDF installation check.
-@REM     set success=false
-@REM )
-
-:: After all checks, display the success message if no errors occurred
-if %success%==true (
+:: Loop through all .bat files and execute them
+for %%f in (*.bat) do (
+    set /a index+=1
     echo.
+    echo Running [!index!/%count%]: %%f
+    call "%%f"
+    if errorlevel 1 (
+        echo Error occurred during %%f.
+        set success=false
+    )
+)
+
+:: Report final result
+echo.
+if !success!==true (
     echo All of the required dependencies are installed.
 ) else (
-    echo.
-	echo Encountered error^(s^) during installation checks.
+    echo Encountered error^(s^) during installation checks.
     echo Try installing again or install the dependencies manually.
 )
-cd..
 
+cd..
 pause
 exit /b

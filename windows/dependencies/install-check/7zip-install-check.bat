@@ -1,9 +1,6 @@
-cls
-
 @echo off
 setlocal enabledelayedexpansion
 
-echo Checking dependencies...
 7z i | find "7-Zip" > nul 2>&1
 if %errorlevel% neq 0 (
     echo 7Zip is not installed. Installing 7Zip using winget...

@@ -1,11 +1,7 @@
-cls
-
 @echo off
 setlocal enabledelayedexpansion
 
 if /i "%has_ffmpeg%" neq "true" (
-    echo Checking dependencies...
-
     ffmpeg -version >nul 2>nul
     if %errorlevel% neq 0 (
         echo FFmpeg is not installed. Installing FFmpeg using winget...

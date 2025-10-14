@@ -1,94 +1,55 @@
+@echo off
+setlocal enabledelayedexpansion
+
 :updater
 cls
 
-:: Initialize a flag to track success
+:: Go to the folder containing update scripts
+cd update-check || (
+    echo Folder "update-check" not found!
+    exit /b 1
+)
+
+:: Count all .bat files
+set count=0
+for %%f in (*.bat) do (
+    set /a count+=1
+)
+
+if %count%==0 (
+    echo No update scripts found in update-check.
+    cd..
+    exit /b 1
+)
+
+:: Initialize success flag
 set success=true
+set index=0
 
-cd update-check
-
-:: Call each update check and check for errors
-
-call 7zip-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during 7Zip update check.
-    set success=false
-)
-
-call ffmpeg-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during FFmpeg update check.
-    set success=false
-)
-
-call python-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Python update check.
-    set success=false
-)
-
-call pip-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Pip update check.
-    set success=false
-)
-
-call pdf-to-docx-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during PDF2DOCX update check.
-    set success=false
-)
-
-call image-magick-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during ImageMagick update check.
-    set success=false
-)
-
-call choco-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Chocolatey update check.
-    set success=false
-)
-
-call ghostscript-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Ghostscript update check.
-    set success=false
-)
-
-call tesseract-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during Tesseract update check.
-    set success=false
-)
-
-call ocr-my-pdf-update-check.bat
-if %errorlevel% neq 0 (
-    echo Error occurred during OCRmyPDF update check.
-    set success=false
-)
-
-@REM call eml-to-pdf-update-check.bat
-@REM if %errorlevel% neq 0 (
-@REM     echo Error occurred during EML2PDF update check.
-@REM     set success=false
-@REM )
-
-:: After all checks, display the success message if no errors occurred
-if %success%==true (
+:: Loop through all .bat files and execute them
+for %%f in (*.bat) do (
+    set /a index+=1
     echo.
+    echo Running update [!index!/%count%]: %%f
+    call "%%f"
+    if errorlevel 1 (
+        echo Error occurred during %%f.
+        set success=false
+    )
+)
+
+:: Report final result
+echo.
+if !success!==true (
     echo All of the installed dependencies are updated.
 ) else (
-    echo.
-	echo Encountered error^(s^) during update checks.
+    echo Encountered error^(s^) during update checks.
     echo Try updating again or update the dependencies manually.
 )
-echo.
-echo.
-echo.
+
 echo.
 echo.
 cd..
 echo All installed packages have been updated!
-pause 
+pause
 exit /b

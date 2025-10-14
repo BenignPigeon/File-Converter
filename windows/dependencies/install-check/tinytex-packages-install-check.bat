@@ -1,31 +1,33 @@
 @echo off
-setlocal
-REM ==========================================
-REM TinyTeX Package Installer - LaTeX Recommended
-REM ==========================================
+setlocal enabledelayedexpansion
 
-echo Checking for tlmgr...
 where tlmgr >nul 2>&1
-IF %ERRORLEVEL% NEQ 0 (
-    echo ERROR: tlmgr not found. Make sure TinyTeX is installed and in your PATH.
+if %errorlevel% neq 0 (
+    echo [ERROR] tlmgr not found. Installing TinyTeX first...
+    if exist "%~dp0tinytex-install-check.bat" (
+            call tinytex-install-check.bat
+        ) else (
+            echo [ERROR] tinytex-install-check.bat not found. Install TinyTex manually.
+            pause
+            exit /b 1
+        )
     pause
     exit /b 1
 )
-echo SUCCESS: tlmgr found!
-echo.
 
-echo Installing LaTeX recommended package collection...
-echo ==========================================
-tlmgr install collection-latexrecommended
-IF %ERRORLEVEL% EQU 0 (
-    echo.
-    echo SUCCESS: LaTeX recommended collection installed!
-) ELSE (
-    echo.
-    echo WARNING: Installation may have failed. Check the output above.
+for /f "tokens=2 delims=:" %%A in ('tlmgr info collection-latexrecommended ^| findstr /C:"installed:"') do set "INSTALLED=%%A"
+set "INSTALLED=!INSTALLED: =!"
+
+if /i "!INSTALLED!"=="Yes" (
+    echo LaTeX Collection is already installed.
+) else (
+    echo Installing LaTeX recommended collection...
+    powershell -Command "Start-Process cmd -ArgumentList '/c tlmgr install collection-latexrecommended' -Verb RunAs -Wait"
+    if !errorlevel! neq 0 (
+        echo [ERROR] Installation failed.
+        pause
+        exit /b 1
+    )
+    echo LaTeX Collection installed successfully.
 )
-echo ==========================================
-echo.
-echo All done. You can now compile your LaTeX documents.
-echo.
-pause
+exit /b

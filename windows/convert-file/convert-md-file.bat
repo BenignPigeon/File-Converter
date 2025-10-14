@@ -4,6 +4,8 @@ if /i "%has_pandoc%" neq "true" (
     echo Checking dependencies...
     cd ..\dependencies\install-check
     call pandoc-install-check.bat
+    call tinytex-install-check.bat
+    call tinytex-packages-install-check.bat
     cd ..\..\convert-file
 
     :: Check if has_pandoc is not true and update the line
