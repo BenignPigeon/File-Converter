@@ -73,6 +73,11 @@ if %errorlevel% neq 0 (
     echo Error occurred during Pandoc installation check.
     set success=false
 )
+call tinytex-packages-install-check.bat
+if %errorlevel% neq 0 (
+    echo Error occurred during TinyTex packages installation check.
+    set success=false
+)
 
 @REM call eml-to-pdf-install-check.bat
 @REM if %errorlevel% neq 0 (

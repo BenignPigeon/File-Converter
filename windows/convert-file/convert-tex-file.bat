@@ -16,6 +16,22 @@ if /i "%has_pandoc%" neq "true" (
             )
         )
 )
+if /i "%has_tinytex_packages%" neq "true" (
+    echo Checking dependencies...
+    cd ..\dependencies\install-check
+    call tinytex-packages-install-check.bat
+    cd ..\..\convert-file
+
+    :: Check if has_tinytex_packages is not true and update the line
+        for /f "tokens=1,* delims==" %%a in (%config_file%) do (
+            if /i "%%a"=="has_tinytex_packages" (
+                set "line=%%a=%%b"
+                if /i "%%b" neq "true" (
+                    powershell -Command "(Get-Content '%config_file%') | ForEach-Object {if ($_ -match '^has_tinytex_packages=') {'has_tinytex_packages=true'} else {$_}} | Set-Content '%config_file%'"
+                )
+            )
+        )
+)
 
 :convert_md_file
 cls
