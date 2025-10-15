@@ -22,78 +22,57 @@ call universal-parameters.bat
 :: ============================================================================
 set "defaults_count=0"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=first_execution=true"
+set /a defaults_count+=1 & set "default[!defaults_count!]=first_execution=true"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=method=explorer"
+set /a defaults_count+=1 & set "default[!defaults_count!]=method=explorer"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=has_ffmpeg=false"
+set /a defaults_count+=1 & set "default[!defaults_count!]=has_ffmpeg=false"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=has_7zip=false"
+set /a defaults_count+=1 & set "default[!defaults_count!]=has_7zip=false"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=has_pandoc=false"
+set /a defaults_count+=1 & set "default[!defaults_count!]=has_pandoc=false"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=has_latex=false"
+set /a defaults_count+=1 & set "default[!defaults_count!]=has_latex=false"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=has_tinytex_packages=false"
+set /a defaults_count+=1 & set "default[!defaults_count!]=has_tinytex_packages=false"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=has_pdf_to_docx_dependencies=false"
+set /a defaults_count+=1 & set "default[!defaults_count!]=has_pdf_to_docx_dependencies=false"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=has_pdf_to_png_dependencies=false"
+set /a defaults_count+=1 & set "default[!defaults_count!]=has_pdf_to_png_dependencies=false"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=has_pdf_ocr_dependencies=false"
+set /a defaults_count+=1 & set "default[!defaults_count!]=has_pdf_ocr_dependencies=false"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=output_path_enabled=0"
+set /a defaults_count+=1 & set "default[!defaults_count!]=output_path_enabled=0"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=output_path=%USERPROFILE%\Desktop"
+set /a defaults_count+=1 & set "default[!defaults_count!]=output_path=%USERPROFILE%\Desktop"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=supported_image_formats=arw,bmp,cr2,dds,dns,exr,heic,ico,jfif,jpg,jpeg,nef,png,psd,raf,svg,tif,tiff,tga,webp"
+set /a defaults_count+=1 & set "default[!defaults_count!]=supported_image_formats=arw,bmp,cr2,dds,dns,exr,heic,ico,jfif,jpg,jpeg,nef,png,psd,raf,svg,tif,tiff,tga,webp"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=supported_audio_formats=aac,aiff,ape,bik,cda,flac,gif,m4a,m4b,mp3,oga,ogg,ogv,opus,wav,wma"
+set /a defaults_count+=1 & set "default[!defaults_count!]=supported_audio_formats=aac,aiff,ape,bik,cda,flac,gif,m4a,m4b,mp3,oga,ogg,ogv,opus,wav,wma"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=supported_video_formats=3gp,3gpp,avi,bik,flv,gif,m4v,mkv,mp4,mpg,mpeg,mov,ogv,rm,ts,vob,webm,wmv"
+set /a defaults_count+=1 & set "default[!defaults_count!]=supported_video_formats=3gp,3gpp,avi,bik,flv,gif,m4v,mkv,mp4,mpg,mpeg,mov,ogv,rm,ts,vob,webm,wmv"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=supported_archive_formats=zip,tar,gz,7z,rar"
+set /a defaults_count+=1 & set "default[!defaults_count!]=supported_archive_formats=zip,tar,gz,7z,rar"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=supported_word_formats=docx,odt,doc"
+set /a defaults_count+=1 & set "default[!defaults_count!]=supported_word_formats=docx,odt,doc"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=supported_powerpoint_formats=pptx,ppt"
+set /a defaults_count+=1 & set "default[!defaults_count!]=supported_powerpoint_formats=pptx,ppt"
 
-set /a defaults_count+=1
-set "default[!defaults_count!]=supported_excel_formats=xlsx,xls"
+set /a defaults_count+=1 & set "default[!defaults_count!]=supported_excel_formats=xlsx,xls"
 
-@REM :: ============================================================================
-@REM :: DEBUG: Check config_file variable
-@REM :: ============================================================================
-@REM echo Config file path: "%config_file%"
-@REM if not defined config_file (
-@REM     echo ERROR: config_file variable is not defined!
-@REM     pause
-@REM     exit /b 1
-@REM )
+:: ============================================================================
+:: DEBUG: Check config_file variable
+:: ============================================================================
+if not defined config_file (
+    echo ERROR: config_file variable is not defined!
+    pause
+    exit /b 1
+)
 
-@REM :: Check if path contains problematic characters
-@REM echo "%config_file%" | find "&" >nul && echo WARNING: Path contains ampersand - may cause issues!
-@REM echo "%config_file%" | find "!" >nul && echo WARNING: Path contains exclamation mark - may cause issues!
+:: Check if path contains problematic characters
+echo "%config_file%" | find "&" >nul && echo WARNING: Path contains ampersand - may cause issues!
+echo "%config_file%" | find "!" >nul && echo WARNING: Path contains exclamation mark - may cause issues!
 
-@REM echo Defaults Count: "!defaults_count!"
 
 :: ============================================================================
 :: Create config file if it doesn't exist
@@ -104,27 +83,36 @@ if not exist "%config_file%" (
         echo !default[%%i]! >> "%config_file%"
     )
 ) else (
-    :: ========================================================================
-    :: Config file exists - check for missing keys and append them
-    :: ========================================================================
-    for /L %%i in (1,1,!defaults_count!) do (
-        set "line=!default[%%i]!"
+    setlocal enabledelayedexpansion
+    set /a i=1
+
+    :check_defaults_loop
+    if !i! leq %defaults_count% (
+        :: Safely get the line from the default array
+        call set "line=%%default[!i!]%%"
+
+        :: Extract key (everything before '=')
         for /f "tokens=1 delims==" %%a in ("!line!") do (
             set "key=%%a"
             set "key_exists=false"
-            
+
             :: Check if this key exists in the config file
             for /f "tokens=1 delims==" %%b in ('type "%config_file%"') do (
                 if "%%b"=="!key!" set "key_exists=true"
             )
-            
-            :: If key doesn't exist, append it
+
+            :: Append the default line if key is missing
             if "!key_exists!"=="false" (
                 echo Missing key detected: !key! - adding default value
-                echo !line! >> "%config_file%"
+                echo !line!>>"%config_file%"
             )
         )
+
+        :: Increment counter and loop
+        set /a i+=1
+        goto check_defaults_loop
     )
+    endlocal
 )
 
 :: ============================================================================
@@ -164,13 +152,7 @@ for /L %%i in (1,1,!defaults_count!) do (
 @REM )
 @REM echo.
 
-:: ============================================================================
-:: Your script continues here...
-:: ============================================================================
-echo Ready to proceed with file conversion operations.
-
 ::-----------------------------------------------------------------------------------------------------
-
 if "%first_execution%" neq "false" (
 	cd dependencies
 	call python-add-path.bat
